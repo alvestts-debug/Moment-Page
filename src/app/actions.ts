@@ -2,7 +2,7 @@
 
 import { generateDynamicPropertySummary } from "@/ai/flows/generate-dynamic-property-summary";
 import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 
 const propertyDetails = `
@@ -90,7 +90,7 @@ export async function saveContactAction(data: { name: string; email: string; pho
   try {
     await addDoc(collection(db, "contacts"), {
       ...data,
-      createdAt: serverTimestamp(),
+      createdAt: Timestamp.now(),
     });
     return { success: true };
   } catch (error) {

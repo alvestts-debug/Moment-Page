@@ -64,7 +64,7 @@ const galleryImages = [
   { src: "https://i.imgur.com/FE1qVSb.jpeg", alt: "Pespectiva Piscina infantil", hint: "kids pool" },
   { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Pespectiva Piscina Adulto", hint: "rooftop pool" },
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "gym" },
-  { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte", hint: "leisure area" },
+  { src: "https://i.imgur.com/xDuipUU.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "barbecue area" },
   { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha", hint: "modern kitchen" },
 ];

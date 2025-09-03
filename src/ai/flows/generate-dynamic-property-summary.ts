@@ -50,6 +50,13 @@ const prompt = ai.definePrompt({
   User Interests: {{{userInterests}}}
 
   Generate a summary that highlights the property features most relevant to the user's stated interests. Focus on details about the building itself. Be concise and engaging. The summary should be one paragraph.
+  
+  If you cannot find the specific information requested by the user in the provided "Property Details", you MUST respond with the following text EXACTLY:
+  "No momento não encontrei essa informação nos meus registros.
+Para um atendimento rápido e completo, fale agora com nosso corretor especializado no Moment Noroeste pelo WhatsApp:
+👉 Falar com o corretor
+.
+Ele poderá esclarecer todos os detalhes e enviar informações atualizadas diretamente para você.”
   `,
 });
 

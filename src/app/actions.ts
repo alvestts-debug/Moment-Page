@@ -1,6 +1,9 @@
 "use server";
 
 import { generateDynamicPropertySummary } from "@/ai/flows/generate-dynamic-property-summary";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+
 
 const propertyDetails = `
 📍 Empreendimento: MOMENT NOROESTE
@@ -80,5 +83,18 @@ export async function getDynamicSummaryAction(userInterests: string) {
   } catch (error) {
     console.error("Error generating dynamic summary:", error);
     return "Desculpe, não foi possível gerar o resumo. Por favor, tente novamente mais tarde.";
+  }
+}
+
+export async function saveContactAction(data: { name: string; email: string; phone?: string; message: string; }) {
+  try {
+    await addDoc(collection(db, "contacts"), {
+      ...data,
+      createdAt: serverTimestamp(),
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    return { success: false, error: "Falha ao salvar contato." };
   }
 }

@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Send, CheckCircle } from "lucide-react";
+import { saveContactAction } from "@/app/actions";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
@@ -21,6 +23,7 @@ const formSchema = z.object({
 export default function ContactForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,27 +35,23 @@ export default function ContactForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    const whatsappNumber = "5561986339057"; // IMPORTANTE: Substitua pelo número de WhatsApp desejado.
-    const messageText = `Olá, tenho interesse no Moment Noroeste!
+    const result = await saveContactAction(values);
 
-*Nome:* ${values.name}
-*Email:* ${values.email}
-*Telefone:* ${values.phone || "Não informado"}
-*Mensagem:* ${values.message}`;
+    setIsLoading(false);
 
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageText)}`;
-
-    // Open WhatsApp in a new tab
-    window.open(whatsappUrl, "_blank");
-    
-    // We can still simulate the "submission" success state on the page
-    setTimeout(() => {
-      setIsLoading(false);
+    if (result.success) {
       setIsSubmitted(true);
-    }, 500); // Short delay to allow the new tab to open
+      form.reset();
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Erro ao enviar",
+        description: result.error || "Não foi possível enviar sua mensagem. Tente novamente mais tarde.",
+      });
+    }
   }
 
   if (isSubmitted) {
@@ -60,8 +59,8 @@ export default function ContactForm() {
       <Card className="w-full max-w-2xl mx-auto bg-card shadow-lg">
         <CardHeader className="items-center text-center p-8">
             <CheckCircle className="h-12 w-12 text-green-500" />
-            <CardTitle className="mt-4">Obrigado!</CardTitle>
-            <CardDescription>Sua mensagem foi preparada para envio no WhatsApp. Por favor, confirme o envio na nova aba.</CardDescription>
+            <CardTitle className="mt-4">Obrigado pelo seu interesse!</CardTitle>
+            <CardDescription>Recebemos sua mensagem e entraremos em contato em breve.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -138,12 +137,12 @@ export default function ContactForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Abrindo WhatsApp...
+                  Enviando...
                 </>
               ) : (
                 <>
                   <Send className="mr-2 h-4 w-4" />
-                  Enviar por WhatsApp
+                  Enviar Mensagem
                 </>
               )}
             </Button>

@@ -35,7 +35,7 @@ export default function ContactForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    const whatsappNumber = "5561000000000"; // IMPORTANTE: Substitua pelo número de WhatsApp desejado.
+    const whatsappNumber = "5561986339057"; // IMPORTANTE: Substitua pelo número de WhatsApp desejado.
     const messageText = `Olá, tenho interesse no Moment Noroeste!
 
 *Nome:* ${values.name}

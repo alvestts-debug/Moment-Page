@@ -62,10 +62,10 @@ const galleryImages = [
   { src: "https://i.imgur.com/q0FFXgt.jpeg", alt: "Fachada Tarde", hint: "apartment perspective" },
   { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna", hint: "night facade" },
   { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte Master", hint: "master suite" },
-  { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Perspectiva Piscina", hint: "rooftop pool" },
+  { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Pespectiva Piscina Adulto", hint: "rooftop pool" },
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "gym" },
   { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte", hint: "leisure area" },
-  { src: "https://i.imgur.com/UN5wyDM.jpeg", alt: "Perspectiva Churrasqueira", hint: "barbecue area" },
+  { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "barbecue area" },
   { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha", hint: "modern kitchen" },
 ];
 
@@ -82,7 +82,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-secondary text-foreground">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 text-primary-foreground backdrop-blur-sm shadow-md">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-800 text-primary-foreground backdrop-blur-sm shadow-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <a href="#" className="flex items-center">
             <Image src="https://i.imgur.com/cSRvYaG.png" alt="Moment Noroeste Logo" width={150} height={40} style={{ filter: 'brightness(0) invert(1)' }}/>

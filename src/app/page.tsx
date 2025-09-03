@@ -169,9 +169,9 @@ export default function Home() {
                 Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
               </p>
             </div>
-            <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
+            <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
               <iframe
-                src="https://player.vimeo.com/video/1115548444"
+                src="https://player.vimeo.com/video/1115548444?loop=1&autoplay=1&muted=1"
                 className="w-full h-full"
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen

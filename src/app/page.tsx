@@ -179,19 +179,18 @@ export default function Home() {
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Aponte a câmera do seu celular para o QR Code abaixo e faça um tour pelo apartamento decorado.
+                Faça um tour pelo apartamento decorado e sinta a experiência de morar no Momento Noroeste.
               </p>
             </div>
-            <div className="mt-12 mx-auto max-w-xs aspect-square overflow-hidden rounded-lg shadow-2xl flex items-center justify-center flex-col gap-4 bg-card p-6">
-                <QrCode className="w-16 h-16 text-primary" />
-                <Image
-                    src="https://i.imgur.com/xshIyin.png"
-                    alt="QR Code para o tour virtual do apartamento decorado"
-                    width={250}
-                    height={250}
-                    className="rounded-md"
-                    data-ai-hint="qr code"
-                />
+            <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
+              <video
+                src="https://i.imgur.com/TMWb6if.mp4"
+                controls
+                className="w-full h-full object-cover"
+                poster="https://i.imgur.com/lD5jJ8s.jpeg"
+              >
+                Seu navegador não suporta o elemento de vídeo.
+              </video>
             </div>
           </div>
         </section>

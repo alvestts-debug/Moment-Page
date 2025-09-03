@@ -95,7 +95,7 @@ export default function Home() {
             priority
             data-ai-hint="modern building exterior"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/80" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline">
               Viva o seu melhor momento.

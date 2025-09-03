@@ -86,7 +86,7 @@ export async function getDynamicSummaryAction(userInterests: string) {
   }
 }
 
-export async function saveContactAction(data: { name: string; email: string; phone?: string; message: string; }) {
+export async function saveContactAction(data: { name: string; email: string; phone: string; interestType: "morar" | "investir"; message?: string; }) {
   try {
     await addDoc(collection(db, "contacts"), {
       ...data,

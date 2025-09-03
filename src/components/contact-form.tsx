@@ -12,12 +12,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2, Send, CheckCircle } from "lucide-react";
 import { saveContactAction } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const formSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
   email: z.string().email("Por favor, insira um email válido."),
-  phone: z.string().optional(),
-  message: z.string().min(10, "A mensagem deve ter pelo menos 10 caracteres."),
+  phone: z.string().min(10, "Por favor, insira um telefone válido com DDD."),
+  interestType: z.enum(["morar", "investir"], {
+    required_error: "Você precisa selecionar um objetivo.",
+  }),
+  message: z.string().optional(),
 });
 
 export default function ContactForm() {
@@ -45,6 +49,8 @@ export default function ContactForm() {
     if (result.success) {
       setIsSubmitted(true);
       form.reset();
+      // Reset isSubmitted state after a while to allow new submissions
+      setTimeout(() => setIsSubmitted(false), 5000);
     } else {
       toast({
         variant: "destructive",
@@ -90,27 +96,63 @@ export default function ContactForm() {
                 </FormItem>
               )}
             />
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="seu@email.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefone com DDD</FormLabel>
+                    <FormControl>
+                      <Input placeholder="(XX) XXXXX-XXXX" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
-              name="email"
+              name="interestType"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
+                <FormItem className="space-y-3">
+                  <FormLabel>Qual seu objetivo?</FormLabel>
                   <FormControl>
-                    <Input placeholder="seu@email.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Telefone (Opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="(XX) XXXXX-XXXX" {...field} />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="morar" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Morar
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="investir" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Investir
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -121,10 +163,10 @@ export default function ContactForm() {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mensagem</FormLabel>
+                  <FormLabel>Mensagem (Opcional)</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Gostaria de mais informações sobre as unidades de 3 quartos..."
+                      placeholder="Gostaria de mais informações sobre..."
                       className="resize-none"
                       {...field}
                     />

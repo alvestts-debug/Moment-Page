@@ -5,16 +5,16 @@ import { generateDynamicPropertySummary } from "@/ai/flows/generate-dynamic-prop
 const propertyDetails = `
 📍 Empreendimento: MOMENT NOROESTE
 
-Localização: SONW 104, Bloco F, Noroeste, Brasília-DF
-Empreendimento residencial de alto padrão com foco em conforto, tecnologia e sustentabilidade.
+Localização: SQNW 104 F, Noroeste, Brasília-DF
+Empreendimento residencial de alto padrão com foco em conforto, tecnologia e sustentabilidade, desenvolvido pela APEX Engenharia e JARJOUR.
 
 ---
 
 🏢 Tipos de Apartamentos:
 
-· 3 quartos com 1 suíte – 88/89 m²
-· 3 quartos com 1 suíte e 2 semissuítes – 112 m² (canto vazado)
-· 3 suítes – 105 m² (vazado)
+· 3 quartos com 1 suíte – 88/89 m² (suíte com closet, 2 vagas, depósito)
+· 3 quartos com 1 suíte e 2 semissuítes – 112 m² (canto vazado, 3 vagas, depósito)
+· 3 suítes – 105 m² (vazado, varanda gourmet, 2 vagas, depósito)
 · Coberturas variando de 175 m² a 261 m²
 
 ---
@@ -28,60 +28,46 @@ Empreendimento residencial de alto padrão com foco em conforto, tecnologia e su
 · Rodapé de poliestireno de 10 cm
 · Laje maciça para conforto acústico
 · Paredes duplas com tratamento acústico entre unidades
-· Bancadas em granito
+· Bancadas em granito e quartzito
 · Infraestrutura para ar condicionado e exaustão na cozinha
 · Vagas com preparação para carregador de carro elétrico
 
 ---
 
-🏊 Áreas Comuns:
+🏊 Áreas Comuns e Lazer:
 
+· Mais de 2.000m² de área de lazer
 · Piscina adulto e infantil climatizada (26º–28ºC)
 · Churrasqueira com piscina exclusiva
-· Sauna
-· Academia
+· Sauna e Spa
+· Academia premium
 · Salão de festas
 · Brinquedoteca
 · Espaço FIX com kit de ferramentas
 · Bicicletário com Bike Wash
 · Paisagismo integrado com praça
 · Iluminação LED e sensores de presença
-· Sistema de segurança com reconhecimento facial e CFTV
+· Sistema de segurança 24h com reconhecimento facial e CFTV
 · Gerador de energia para áreas comuns
 · Wi-Fi nas áreas de pilotis e cobertura
 
 ---
 
-🧭 Orientação Solar:
-
-· Fachada norte e sul detalhadas com projeção solar
-· Inserção no contexto urbano do Noroeste com estudo de insolação
-
----
-
-🏗️ Materiais de Fachada:
+🏗️ Materiais de Fachada e Acabamento:
 
 · Granito ecológico cinza
 · Vidro de desempenho térmico e lumínico
 · Esquadrias de alumínio cinza
 · Chapas metálicas perfuradas
 · Porcelanato e granito no pilotis
-
----
-
-🚗 Vagas de Garagem:
-
-· Até 3 vagas por unidade (varia conforme o apartamento e andar)
-· Vagas com infraestrutura para carregador de veículo elétrico
-· Pintura epóxi no piso da garagem
+· Bancadas em granito polido e mármore
 
 ---
 
 🤝 Construtora e Incorporadora:
 
-· APEX Engenharia (desde 1976, mais de 5 mil unidades entregues)
-· JARJOUR (60 anos de mercado, reconhecida por solidez e confiança)
-· Parceria consolidada em empreendimentos de alto padrão em Brasília
+· APEX Engenharia: Desde 1976, mais de 5 mil unidades entregues e 500.000 m² construídos no DF.
+· JARJOUR: Mais de 60 anos de mercado, reconhecida por solidez e confiança em mais de 100 projetos.
 `;
 
 export async function getDynamicSummaryAction(userInterests: string) {

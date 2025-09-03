@@ -87,7 +87,7 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section id="hero" className="relative h-screen w-full">
+        <section id="hero" className="relative h-[50vh] w-full">
           <Image
             src="https://i.imgur.com/LIbagMB.jpeg"
             alt="Fachada do empreendimento Moment Noroeste"

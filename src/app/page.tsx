@@ -63,23 +63,23 @@ const galleryImages = [
 export default function Home() {
   return (
     <div className="flex flex-col min-h-[100dvh] bg-secondary text-foreground">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/80 backdrop-blur-sm shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 text-primary-foreground backdrop-blur-sm shadow-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <a href="#" className="flex items-center">
-            <Image src="https://i.imgur.com/cSRvYaG.png" alt="Moment Noroeste Logo" width={150} height={40} />
+            <Image src="https://i.imgur.com/cSRvYaG.png" alt="Moment Noroeste Logo" width={150} height={40} style={{ filter: 'brightness(0) invert(1)' }}/>
           </a>
           <nav className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className="text-sm font-medium transition-colors hover:text-gray-300"
               >
                 {link.label}
               </a>
             ))}
           </nav>
-          <Button asChild className="hidden md:flex" size="sm">
+          <Button asChild className="hidden md:flex bg-gray-50 text-gray-900 hover:bg-gray-200" size="sm">
             <a href="#contato">Agende uma Visita</a>
           </Button>
         </div>
@@ -190,7 +190,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-gray-900 text-primary-foreground">
+      <footer className="bg-primary text-primary-foreground">
         <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
           <p className="text-sm flex items-center gap-2">
             &copy; {new Date().getFullYear()} 
@@ -202,7 +202,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
-
-    

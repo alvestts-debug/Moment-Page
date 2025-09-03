@@ -34,12 +34,25 @@ export default function ContactForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    console.log("Lead captured:", values);
-    // Simulate API call
+
+    const whatsappNumber = "5561000000000"; // IMPORTANTE: Substitua pelo número de WhatsApp desejado.
+    const messageText = `Olá, tenho interesse no Moment Noroeste!
+
+*Nome:* ${values.name}
+*Email:* ${values.email}
+*Telefone:* ${values.phone || "Não informado"}
+*Mensagem:* ${values.message}`;
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank");
+    
+    // We can still simulate the "submission" success state on the page
     setTimeout(() => {
       setIsLoading(false);
       setIsSubmitted(true);
-    }, 1500);
+    }, 500); // Short delay to allow the new tab to open
   }
 
   if (isSubmitted) {
@@ -48,7 +61,7 @@ export default function ContactForm() {
         <CardHeader className="items-center text-center p-8">
             <CheckCircle className="h-12 w-12 text-green-500" />
             <CardTitle className="mt-4">Obrigado!</CardTitle>
-            <CardDescription>Sua mensagem foi enviada com sucesso. Entraremos em contato em breve.</CardDescription>
+            <CardDescription>Sua mensagem foi preparada para envio no WhatsApp. Por favor, confirme o envio na nova aba.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -125,12 +138,12 @@ export default function ContactForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Enviando...
+                  Abrindo WhatsApp...
                 </>
               ) : (
                 <>
                   <Send className="mr-2 h-4 w-4" />
-                  Enviar Mensagem
+                  Enviar por WhatsApp
                 </>
               )}
             </Button>

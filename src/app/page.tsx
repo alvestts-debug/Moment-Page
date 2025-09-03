@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed, QrCode } from "lucide-react";
 import ContactForm from "@/components/contact-form";
 import DynamicSummary from "@/components/dynamic-summary";
 
@@ -52,10 +52,10 @@ const galleryImages = [
   { src: "https://i.imgur.com/lD5jJ8s.jpeg", alt: "Sala de Estar", hint: "living room" },
   { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha", hint: "modern kitchen" },
   { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte Master", hint: "master suite" },
-  { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Piscina na Cobertura", hint: "rooftop pool" },
-  { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Academia", hint: "gym" },
-  { src: "https://i.imgur.com/vZXPDz2.jpeg", alt: "Área de Lazer", hint: "leisure area" },
-  { src: "https://i.imgur.com/UN5wyDM.jpeg", alt: "Churrasqueira", hint: "barbecue area" },
+  { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Perspectiva Piscina", hint: "rooftop pool" },
+  { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "gym" },
+  { src: "https://i.imgur.com/vZXPDz2.jpeg", alt: "Perspectiva Área de Lazer", hint: "leisure area" },
+  { src: "https://i.imgur.com/UN5wyDM.jpeg", alt: "Perspectiva Churrasqueira", hint: "barbecue area" },
   { src: "https://i.imgur.com/6Xy1rGj.jpeg", alt: "Fachada Noturna", hint: "night facade" },
 ];
 
@@ -175,24 +175,25 @@ export default function Home() {
 
         {/* Video Section */}
         <section id="video" className="py-16 md:py-24 bg-background">
-            <div className="container mx-auto px-4 md:px-6">
-                <div className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
-                    <p className="mt-4 text-lg text-muted-foreground">
-                        Faça um tour pelo empreendimento e sinta a experiência de viver no Momento Noroeste.
-                    </p>
-                </div>
-                <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
-                    <iframe
-                        className="w-full h-full"
-                        src="https://www.youtube.com/embed/v9q3F1tA8Ow"
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
-                </div>
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Aponte a câmera do seu celular para o QR Code abaixo e faça um tour pelo apartamento decorado.
+              </p>
             </div>
+            <div className="mt-12 mx-auto max-w-xs aspect-square overflow-hidden rounded-lg shadow-2xl flex items-center justify-center flex-col gap-4 bg-card p-6">
+                <QrCode className="w-16 h-16 text-primary" />
+                <Image
+                    src="https://i.imgur.com/xshIyin.png"
+                    alt="QR Code para o tour virtual do apartamento decorado"
+                    width={250}
+                    height={250}
+                    className="rounded-md"
+                    data-ai-hint="qr code"
+                />
+            </div>
+          </div>
         </section>
 
         {/* Contact Form Section */}

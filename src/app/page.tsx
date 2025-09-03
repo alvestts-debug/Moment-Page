@@ -67,7 +67,7 @@ const galleryImages = [
   { src: "https://i.imgur.com/xDuipUU.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "barbecue area" },
   { src: "https://i.imgur.com/77q2sZi.jpeg", alt: "salão de festa", hint: "party room" },
-  { src: "https://i.imgur.com/3MImlsx.jpeg", alt: "Localização", hint: "location map" },
+  { src: "https://i.imgur.com/3MImlsx.jpeg", alt: "Localização - SQNW 104 F, Noroeste", hint: "location map" },
 ];
 
 export default function Home() {

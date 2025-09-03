@@ -1,4 +1,6 @@
+"use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -47,6 +49,13 @@ const features = [
   },
 ];
 
+const facadeImages = [
+  { src: "https://i.imgur.com/eWcADeW.jpeg", alt: "Fachada Manhã" },
+  { src: "https://i.imgur.com/q0FFXgt.jpeg", alt: "Fachada Tarde" },
+  { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna" },
+];
+
+
 // Gallery images data.
 const galleryImages = [
   { src: "https://i.imgur.com/eWcADeW.jpeg", alt: "Fachada Manhã", hint: "living area perspective" },
@@ -61,6 +70,16 @@ const galleryImages = [
 ];
 
 export default function Home() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % facadeImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-[100dvh] bg-secondary text-foreground">
       <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 text-primary-foreground backdrop-blur-sm shadow-md">
@@ -88,14 +107,19 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section id="hero" className="relative h-[50vh] w-full">
-          <Image
-            src="https://i.imgur.com/LIbagMB.jpeg"
-            alt="Fachada do empreendimento Moment Noroeste"
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint="modern building exterior"
-          />
+          {facadeImages.map((image, index) => (
+            <Image
+              key={image.src}
+              src={image.src}
+              alt={image.alt}
+              fill
+              className={`object-cover transition-opacity duration-1000 ease-in-out ${
+                index === currentImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+              priority={index === 0}
+              data-ai-hint="modern building exterior"
+            />
+          ))}
         </section>
 
         {/* Property Details Section */}

@@ -6,68 +6,65 @@ const propertyDetails = `
 📍 Empreendimento: MOMENT NOROESTE
 
 Localização: SQNW 104 F, Noroeste, Brasília-DF
-Empreendimento residencial de alto padrão com foco em conforto, tecnologia e sustentabilidade, desenvolvido pela APEX Engenharia e JARJOUR.
+Status da Obra: Fundação concluída e estrutura em andamento (Atualizado em 03/09/2025).
+Previsão de Entrega: Fevereiro/2028 (Fonte: APEX Engenharia)
+Registro de Incorporação: R-11/131.475
 
 ---
 
 🏢 Tipos de Apartamentos:
 
-· 3 quartos com 1 suíte – 88/89 m² (suíte com closet, 2 vagas, depósito)
-· 3 quartos com 1 suíte e 2 semissuítes – 112 m² (canto vazado, 3 vagas, depósito)
-· 3 suítes – 105 m² (vazado, varanda gourmet, 2 vagas, depósito)
-· Coberturas variando de 175 m² a 261 m²
+· 3 Quartos (1 Suíte) – 89 m²:
+  - Suíte master com espaço para closet.
+  - Cozinha americana.
+  - Lavabo.
+  - 2 vagas de garagem e depósito.
+
+· 3 Quartos (1 Suíte + 2 Semissuítes) – 112 m²:
+  - Apartamento de canto, vazado.
+  - Sala em dois ambientes.
+  - Lavabo.
+  - 3 vagas de garagem e depósito.
+
+· 3 Suítes – 105 m²:
+  - Apartamento vazado.
+  - Varanda gourmet.
+  - Lavabo e banheiro de serviço.
+  - 2 vagas de garagem e depósito.
 
 ---
 
 🎯 Diferenciais das Unidades:
 
-· Porta de entrada com fechadura eletrônica e sistema de guilhotina
-· Infraestrutura para automação (central de comando – Alexa ou Google)
-· Aquecimento solar com complementação a gás
-· Piso em porcelanato de grande formato
-· Rodapé de poliestireno de 10 cm
-· Laje maciça para conforto acústico
-· Paredes duplas com tratamento acústico entre unidades
-· Bancadas em granito e quartzito
-· Infraestrutura para ar condicionado e exaustão na cozinha
-· Vagas com preparação para carregador de carro elétrico
+· Acabamento de Alto Padrão: Piso em porcelanato de grande formato, rodapé de 10 cm, bancadas em granito e quartzito.
+· Tecnologia e Conforto: Fechadura eletrônica, infraestrutura para automação (compatível com Alexa/Google), aquecimento solar com complementação a gás.
+· Conforto Acústico: Laje maciça e paredes duplas com tratamento acústico entre as unidades.
+· Praticidade: Infraestrutura para ar condicionado e exaustão na cozinha.
+· Sustentabilidade: Vagas de garagem com preparação para carregador de carro elétrico.
 
 ---
 
 🏊 Áreas Comuns e Lazer:
 
-· Mais de 2.000m² de área de lazer
-· Piscina adulto e infantil climatizada (26º–28ºC)
-· Churrasqueira com piscina exclusiva
-· Sauna e Spa
-· Academia premium
-· Salão de festas
-· Brinquedoteca
-· Espaço FIX com kit de ferramentas
-· Bicicletário com Bike Wash
-· Paisagismo integrado com praça
-· Iluminação LED e sensores de presença
-· Sistema de segurança 24h com reconhecimento facial e CFTV
-· Gerador de energia para áreas comuns
-· Wi-Fi nas áreas de pilotis e cobertura
+· Complexo Aquático: Piscina adulto e infantil climatizadas (26º–28ºC).
+· Espaços Gourmet: Churrasqueira com piscina exclusiva para convidados.
+· Bem-Estar: Sauna e Spa, academia premium.
+· Conveniência e Social: Salão de festas, brinquedoteca, espaço FIX com kit de ferramentas, bicicletário com Bike Wash.
+· Tecnologia e Segurança: Paisagismo com iluminação LED e sensores, sistema de segurança 24h com reconhecimento facial e CFTV, Wi-Fi nas áreas comuns e gerador de energia.
 
 ---
 
 🏗️ Materiais de Fachada e Acabamento:
 
-· Granito ecológico cinza
-· Vidro de desempenho térmico e lumínico
-· Esquadrias de alumínio cinza
-· Chapas metálicas perfuradas
-· Porcelanato e granito no pilotis
-· Bancadas em granito polido e mármore
+· Fachada: Revestida em granito ecológico cinza, vidro de alto desempenho térmico, esquadrias de alumínio e chapas metálicas perfuradas.
+· Pilotis: Acabamento em porcelanato e granito, com bancadas em granito polido e mármore.
 
 ---
 
 🤝 Construtora e Incorporadora:
 
-· APEX Engenharia: Desde 1976, mais de 5 mil unidades entregues e 500.000 m² construídos no DF.
-· JARJOUR: Mais de 60 anos de mercado, reconhecida por solidez e confiança em mais de 100 projetos.
+· APEX Engenharia: Desde 1976, com mais de 5.000 unidades entregues e 500.000 m² construídos no DF.
+· JARJOUR: Mais de 60 anos de mercado, reconhecida pela solidez e confiança em mais de 100 projetos.
 `;
 
 export async function getDynamicSummaryAction(userInterests: string) {

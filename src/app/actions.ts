@@ -3,7 +3,7 @@
 import { generateDynamicPropertySummary } from "@/ai/flows/generate-dynamic-property-summary";
 
 const propertyDetails = `
-Empreendimento: Momento Noroeste
+Empreendimento: Moment Noroeste
 Localização: Setor Noroeste, Brasília - DF, Brasil. Próximo ao Parque Burle Marx e com fácil acesso às principais vias da cidade.
 Arquitetura e Design: Fachada imponente com granito marrom polido, esquadrias metálicas na cor grafite e amplas áreas envidraçadas com vidro translúcido cinza-azulado. O design interior prioriza acabamentos suaves em tons de bege e neutros claros, criando um ambiente aconchegante e sofisticado.
 Unidades Residenciais:

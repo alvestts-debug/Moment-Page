@@ -66,7 +66,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <a href="#" className="text-xl font-bold text-primary">
-            Momento Noroeste
+            Moment Noroeste
           </a>
           <nav className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
@@ -90,7 +90,7 @@ export default function Home() {
         <section id="hero" className="relative h-screen w-full">
           <Image
             src="https://i.imgur.com/LIbagMB.jpeg"
-            alt="Fachada do empreendimento Momento Noroeste"
+            alt="Fachada do empreendimento Moment Noroeste"
             fill
             className="object-cover"
             priority
@@ -104,7 +104,7 @@ export default function Home() {
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Um novo conceito de viver bem</h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Cada detalhe do Momento Noroeste foi pensado para oferecer uma experiência única de moradia, unindo luxo, conforto e praticidade.
+                Cada detalhe do Moment Noroeste foi pensado para oferecer uma experiência única de moradia, unindo luxo, conforto e praticidade.
               </p>
             </div>
             <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -166,7 +166,7 @@ export default function Home() {
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Faça um tour pelo apartamento decorado e sinta a experiência de morar no Momento Noroeste.
+                Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
               </p>
             </div>
             <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
@@ -193,7 +193,7 @@ export default function Home() {
       <footer className="bg-primary text-primary-foreground">
         <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} Momento Noroeste. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} Moment Noroeste. Todos os direitos reservados.
           </p>
         </div>
       </footer>

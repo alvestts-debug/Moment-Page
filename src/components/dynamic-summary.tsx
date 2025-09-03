@@ -46,7 +46,7 @@ export default function DynamicSummary() {
               Resumo Personalizado com IA
             </CardTitle>
             <CardDescription>
-              Diga-nos o que você mais valoriza em um imóvel (ex: 'espaço para família', 'lazer completo', 'investimento') e nossa IA criará um resumo do Momento Noroeste para você.
+              Diga-nos o que você mais valoriza em um imóvel (ex: 'espaço para família', 'lazer completo', 'investimento') e nossa IA criará um resumo do Moment Noroeste para você.
             </CardDescription>
           </CardHeader>
           <CardContent>

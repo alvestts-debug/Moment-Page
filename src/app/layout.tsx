@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Momento Noroeste',
+  title: 'Moment Noroeste',
   description: 'Descubra o seu novo lar no coração do Noroeste.',
 };
 

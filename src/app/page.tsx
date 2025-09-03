@@ -65,8 +65,8 @@ export default function Home() {
     <div className="flex flex-col min-h-[100dvh] bg-secondary text-foreground">
       <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <a href="#" className="text-xl font-bold text-primary">
-            Moment Noroeste
+          <a href="#" className="flex items-center">
+            <Image src="https://i.imgur.com/g8zP8sT.png" alt="Moment Noroeste Logo" width={150} height={40} />
           </a>
           <nav className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
@@ -192,11 +192,15 @@ export default function Home() {
 
       <footer className="bg-primary text-primary-foreground">
         <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} Moment Noroeste. Todos os direitos reservados.
+          <p className="text-sm flex items-center gap-2">
+            &copy; {new Date().getFullYear()} 
+            <Image src="https://i.imgur.com/g8zP8sT.png" alt="Moment Noroeste Logo" width={120} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+            Todos os direitos reservados.
           </p>
         </div>
       </footer>
     </div>
   );
 }
+
+    

@@ -89,7 +89,7 @@ export default function Home() {
         {/* Hero Section */}
         <section id="hero" className="relative h-screen w-full">
           <Image
-            src="https://i.imgur.com/q0FFXgt.jpeg"
+            src="https://i.imgur.com/LIbagMB.jpeg"
             alt="Fachada do empreendimento Momento Noroeste"
             fill
             className="object-cover"

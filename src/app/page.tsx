@@ -105,7 +105,7 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section id="hero" className="relative h-[50vh] w-full">
+        <section id="hero" className="relative w-full h-[50vh] md:h-auto md:aspect-[16/9]">
           {facadeImages.map((image, index) => (
             <Image
               key={image.src}

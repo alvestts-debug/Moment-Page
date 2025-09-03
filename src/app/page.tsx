@@ -49,8 +49,8 @@ const features = [
 
 // Gallery images data.
 const galleryImages = [
-  { src: "https://i.imgur.com/x0R4y2d.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
-  { src: "https://i.imgur.com/lD5jJ8s.jpeg", alt: "Sala de Estar", hint: "living room" },
+  { src: "https://i.imgur.com/eWcADeW.jpeg", alt: "perspectiva 1", hint: "living area perspective" },
+  { src: "https://i.imgur.com/q0FFXgt.jpeg", alt: "perspectiva 2", hint: "apartment perspective" },
   { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha", hint: "modern kitchen" },
   { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte Master", hint: "master suite" },
   { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Perspectiva Piscina", hint: "rooftop pool" },

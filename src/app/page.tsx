@@ -146,13 +146,6 @@ export default function Home() {
           </div>
         </section>
         
-        {/* Dynamic Summary Section */}
-        <section id="resumo-ia" className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-             <DynamicSummary />
-          </div>
-        </section>
-
         {/* Video Section */}
         <section id="video" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
@@ -207,6 +200,13 @@ export default function Home() {
         <section id="contato" className="py-16 md:py-24 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
             <ContactForm />
+          </div>
+        </section>
+
+        {/* Dynamic Summary Section */}
+        <section id="resumo-ia" className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 md:px-6">
+             <DynamicSummary />
           </div>
         </section>
       </main>

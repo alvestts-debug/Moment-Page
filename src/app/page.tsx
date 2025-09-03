@@ -170,14 +170,12 @@ export default function Home() {
               </p>
             </div>
             <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
-              <video
-                src="https://i.imgur.com/TMWb6if.mp4"
-                controls
-                className="w-full h-full object-cover"
-                poster="https://i.imgur.com/lD5jJ8s.jpeg"
-              >
-                Seu navegador não suporta o elemento de vídeo.
-              </video>
+              <iframe
+                src="https://player.vimeo.com/video/1115548444"
+                className="w-full h-full"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
         </section>

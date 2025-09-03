@@ -48,12 +48,12 @@ const features = [
 
 // Gallery images data.
 const galleryImages = [
-  { src: "https://picsum.photos/800/600?random=1", alt: "Vista da sala de estar", hint: "modern living room" },
-  { src: "https://picsum.photos/800/600?random=2", alt: "Cozinha gourmet", hint: "sleek kitchen" },
-  { src: "https://picsum.photos/800/600?random=3", alt: "Suíte master", hint: "minimalist bedroom" },
-  { src: "https://picsum.photos/800/600?random=4", alt: "Piscina na cobertura", hint: "rooftop pool" },
-  { src: "https://picsum.photos/800/600?random=5", alt: "Fachada do edifício à noite", hint: "building facade night" },
-  { src: "https://picsum.photos/800/600?random=6", alt: "Área de lazer", hint: "luxury apartment interior" },
+  { src: "https://i.imgur.com/x0R4y2d.jpeg", alt: "Vista da sala de estar", hint: "modern living room" },
+  { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha gourmet", hint: "sleek kitchen" },
+  { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte master", hint: "minimalist bedroom" },
+  { src: "https://i.imgur.com/4K9Lg8h.jpeg", alt: "Piscina na cobertura", hint: "rooftop pool" },
+  { src: "https://i.imgur.com/6Xy1rGj.jpeg", alt: "Fachada do edifício à noite", hint: "building facade night" },
+  { src: "https://i.imgur.com/lD5jJ8s.jpeg", alt: "Área de lazer", hint: "luxury apartment interior" },
 ];
 
 export default function Home() {
@@ -85,7 +85,7 @@ export default function Home() {
         {/* Hero Section */}
         <section id="hero" className="relative h-screen w-full">
           <Image
-            src="https://picsum.photos/1920/1080"
+            src="https://i.imgur.com/tE5a1Q5.jpeg"
             alt="Fachada do empreendimento Momento Noroeste"
             fill
             className="object-cover"

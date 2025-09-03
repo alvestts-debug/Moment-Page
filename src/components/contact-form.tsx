@@ -17,7 +17,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 const formSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
   email: z.string().email("Por favor, insira um email válido."),
-  phone: z.string().min(10, "Por favor, insira um telefone válido com DDD."),
+  phone: z.string().min(10, "Por favor, insira um telefone válido com DDD.").max(15, "O telefone parece longo demais."),
   interestType: z.enum(["morar", "investir"], {
     required_error: "Você precisa selecionar um objetivo.",
   }),

@@ -190,7 +190,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-primary text-primary-foreground">
+      <footer className="bg-gray-900 text-primary-foreground">
         <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
           <p className="text-sm flex items-center gap-2">
             &copy; {new Date().getFullYear()} 

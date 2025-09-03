@@ -48,12 +48,15 @@ const features = [
 
 // Gallery images data.
 const galleryImages = [
-  { src: "https://i.imgur.com/x0R4y2d.jpeg", alt: "Vista da sala de estar", hint: "modern living room" },
-  { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha gourmet", hint: "sleek kitchen" },
-  { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte master", hint: "minimalist bedroom" },
-  { src: "https://i.imgur.com/4K9Lg8h.jpeg", alt: "Piscina na cobertura", hint: "rooftop pool" },
-  { src: "https://i.imgur.com/6Xy1rGj.jpeg", alt: "Fachada do edifício à noite", hint: "building facade night" },
-  { src: "https://i.imgur.com/lD5jJ8s.jpeg", alt: "Área de lazer", hint: "luxury apartment interior" },
+  { src: "https://i.imgur.com/x0R4y2d.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
+  { src: "https://i.imgur.com/lD5jJ8s.jpeg", alt: "Sala de Estar", hint: "living room" },
+  { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha", hint: "modern kitchen" },
+  { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte Master", hint: "master suite" },
+  { src: "https://i.imgur.com/4K9Lg8h.jpeg", alt: "Piscina na Cobertura", hint: "rooftop pool" },
+  { src: "https://i.imgur.com/O6tqL8c.jpeg", alt: "Academia", hint: "gym" },
+  { src: "https://i.imgur.com/JQLmH3B.jpeg", alt: "Salão de Festas", hint: "party hall" },
+  { src: "https://i.imgur.com/m2L2g6E.jpeg", alt: "Brinquedoteca", hint: "playroom" },
+  { src: "https://i.imgur.com/6Xy1rGj.jpeg", alt: "Fachada Noturna", hint: "night facade" },
 ];
 
 export default function Home() {
@@ -182,7 +185,7 @@ export default function Home() {
                 <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
                     <iframe
                         className="w-full h-full"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        src="https://www.youtube.com/embed/631N_5l41Cg"
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

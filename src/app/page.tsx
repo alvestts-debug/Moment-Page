@@ -54,7 +54,7 @@ const galleryImages = [
   { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte Master", hint: "master suite" },
   { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Piscina na Cobertura", hint: "rooftop pool" },
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Academia", hint: "gym" },
-  { src: "https://i.imgur.com/JQLmH3B.jpeg", alt: "Salão de Festas", hint: "party hall" },
+  { src: "https://i.imgur.com/vZXPDz2.jpeg", alt: "Área de Lazer", hint: "leisure area" },
   { src: "https://i.imgur.com/m2L2g6E.jpeg", alt: "Brinquedoteca", hint: "playroom" },
   { src: "https://i.imgur.com/6Xy1rGj.jpeg", alt: "Fachada Noturna", hint: "night facade" },
 ];

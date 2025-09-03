@@ -20,7 +20,7 @@ const features = [
   {
     icon: <BedDouble className="h-8 w-8 text-primary" />,
     title: "3 Quartos",
-    description: "Opções com suítes e plantas de 88m² a 112m².",
+    description: "Opções com suítes e plantas de 89m² a 112m².",
   },
   {
     icon: <Sparkles className="h-8 w-8 text-primary" />,
@@ -63,9 +63,8 @@ const galleryImages = [
   { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna", hint: "night facade" },
   { src: "https://i.imgur.com/FE1qVSb.jpeg", alt: "Pespectiva Piscina Infantil", hint: "kids pool" },
   { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Pespectiva Piscina Adulto", hint: "rooftop pool" },
-  { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "gym" },
   { src: "https://i.imgur.com/xDuipUU.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
-  { src: "https://i.imgur.com/77q2sZi.jpeg", alt: "Salão de Festa", hint: "party room" },
+  { src: "https://i.imgur.com/77q2sZi.jpeg", alt: "Salão De Festa", hint: "party room" },
   { src: "https://i.imgur.com/3MImlsx.jpeg", alt: "Localização - SQNW 104 F, Noroeste", hint: "location map" },
 ];
 
@@ -154,6 +153,26 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Video Section */}
+        <section id="video" className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
+              </p>
+            </div>
+            <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
+              <iframe
+                src="https://player.vimeo.com/video/1115548444?loop=1&autoplay=1&muted=1"
+                className="w-full h-full"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+
         {/* Image Gallery Section */}
         <section id="galeria" className="py-16 md:py-24 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
@@ -180,26 +199,6 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Video Section */}
-        <section id="video" className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
-              </p>
-            </div>
-            <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
-              <iframe
-                src="https://player.vimeo.com/video/1115548444?loop=1&autoplay=1&muted=1"
-                className="w-full h-full"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              ></iframe>
             </div>
           </div>
         </section>

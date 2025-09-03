@@ -61,12 +61,11 @@ const galleryImages = [
   { src: "https://i.imgur.com/eWcADeW.jpeg", alt: "Fachada Manhã", hint: "living area perspective" },
   { src: "https://i.imgur.com/q0FFXgt.jpeg", alt: "Fachada Tarde", hint: "apartment perspective" },
   { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna", hint: "night facade" },
-  { src: "https://i.imgur.com/FE1qVSb.jpeg", alt: "Pespectiva Piscina infantil", hint: "kids pool" },
+  { src: "https://i.imgur.com/FE1qVSb.jpeg", alt: "Pespectiva Piscina Infantil", hint: "kids pool" },
   { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Pespectiva Piscina Adulto", hint: "rooftop pool" },
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "gym" },
   { src: "https://i.imgur.com/xDuipUU.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
-  { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "barbecue area" },
-  { src: "https://i.imgur.com/77q2sZi.jpeg", alt: "salão de festa", hint: "party room" },
+  { src: "https://i.imgur.com/77q2sZi.jpeg", alt: "Salão de Festa", hint: "party room" },
   { src: "https://i.imgur.com/3MImlsx.jpeg", alt: "Localização - SQNW 104 F, Noroeste", hint: "location map" },
 ];
 

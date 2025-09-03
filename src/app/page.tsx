@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -95,19 +96,6 @@ export default function Home() {
             priority
             data-ai-hint="modern building exterior"
           />
-          <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.7)'}}>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline">
-              Viva o seu melhor momento.
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg md:text-xl">
-              Descubra o Momento Noroeste, um refúgio de sofisticação e conforto no bairro mais desejado de Brasília.
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <a href="#detalhes">
-                Explore o Empreendimento <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
-          </div>
         </section>
 
         {/* Property Details Section */}

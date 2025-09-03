@@ -19,8 +19,8 @@ const navLinks = [
 const features = [
   {
     icon: <BedDouble className="h-8 w-8 text-primary" />,
-    title: "2 e 3 Quartos",
-    description: "Apartamentos com plantas inteligentes e acabamentos de alto padrão.",
+    title: "3 Quartos",
+    description: "Opções com suítes e plantas de 88m² a 112m².",
   },
   {
     icon: <Sparkles className="h-8 w-8 text-primary" />,

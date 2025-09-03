@@ -52,7 +52,7 @@ const galleryImages = [
   { src: "https://i.imgur.com/lD5jJ8s.jpeg", alt: "Sala de Estar", hint: "living room" },
   { src: "https://i.imgur.com/gzaL35d.jpeg", alt: "Cozinha", hint: "modern kitchen" },
   { src: "https://i.imgur.com/eLS6cMU.jpeg", alt: "Suíte Master", hint: "master suite" },
-  { src: "https://i.imgur.com/4K9Lg8h.jpeg", alt: "Piscina na Cobertura", hint: "rooftop pool" },
+  { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Piscina na Cobertura", hint: "rooftop pool" },
   { src: "https://i.imgur.com/O6tqL8c.jpeg", alt: "Academia", hint: "gym" },
   { src: "https://i.imgur.com/JQLmH3B.jpeg", alt: "Salão de Festas", hint: "party hall" },
   { src: "https://i.imgur.com/m2L2g6E.jpeg", alt: "Brinquedoteca", hint: "playroom" },
@@ -185,7 +185,7 @@ export default function Home() {
                 <div className="mt-12 mx-auto max-w-4xl aspect-video overflow-hidden rounded-lg shadow-2xl">
                     <iframe
                         className="w-full h-full"
-                        src="https://www.youtube.com/embed/631N_5l41Cg"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

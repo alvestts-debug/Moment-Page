@@ -57,7 +57,7 @@ const galleryImages = [
   { src: "https://i.imgur.com/A2dflVy.jpeg", alt: "Perspectiva Academia", hint: "gym" },
   { src: "https://i.imgur.com/vZXPDz2.jpeg", alt: "Perspectiva Área de Lazer", hint: "leisure area" },
   { src: "https://i.imgur.com/UN5wyDM.jpeg", alt: "Perspectiva Churrasqueira", hint: "barbecue area" },
-  { src: "https://i.imgur.com/6Xy1rGj.jpeg", alt: "Fachada Noturna", hint: "night facade" },
+  { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna", hint: "night facade" },
 ];
 
 export default function Home() {

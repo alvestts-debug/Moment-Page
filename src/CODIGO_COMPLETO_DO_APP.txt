@@ -1,0 +1,1177 @@
+Este arquivo contém uma cópia de todo o código-fonte do aplicativo, organizada por arquivos e com explicações sobre a função de cada um. 
+Este arquivo é apenas para leitura e consulta. As alterações no código devem ser feitas nos arquivos originais correspondentes.
+
+================================================================================
+ARQUIVO: package.json
+================================================================================
+EXPLICAÇÃO:
+Este é o coração do projeto. Ele lista todas as "peças" (dependências e pacotes) que o aplicativo usa para funcionar, como o React, Next.js, e os componentes de design. Também define os scripts para rodar, construir e testar o projeto (como `npm run dev`).
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+{
+  "name": "nextn",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack -p 9002",
+    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
+    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@genkit-ai/googleai": "^1.14.1",
+    "@genkit-ai/next": "^1.14.1",
+    "@hookform/resolvers": "^4.1.3",
+    "@radix-ui/react-accordion": "^1.2.3",
+    "@radix-ui/react-alert-dialog": "^1.1.6",
+    "@radix-ui/react-avatar": "^1.1.3",
+    "@radix-ui/react-checkbox": "^1.1.4",
+    "@radix-ui/react-collapsible": "^1.1.11",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-menubar": "^1.1.6",
+    "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-progress": "^1.1.2",
+    "@radix-ui/react-radio-group": "^1.2.3",
+    "@radix-ui/react-scroll-area": "^1.2.3",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slider": "^1.2.3",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.1.3",
+    "@radix-ui/react-tabs": "^1.1.3",
+    "@radix-ui/react-toast": "^1.2.6",
+    "@radix-ui/react-tooltip": "^1.1.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.5.0",
+    "embla-carousel-react": "^8.6.0",
+    "firebase": "^11.9.1",
+    "genkit": "^1.14.1",
+    "lucide-react": "^0.475.0",
+    "next": "15.3.3",
+    "patch-package": "^8.0.0",
+    "react": "^18.3.1",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "recharts": "^2.15.1",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "genkit-cli": "^1.14.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
+
+
+================================================================================
+ARQUIVO: src/app/layout.tsx
+================================================================================
+EXPLICAÇÃO:
+Este é o "molde" principal de todas as páginas do site. Ele define a estrutura HTML básica (como as tags `<html>` e `<body>`), carrega fontes globais (como a fonte 'Inter' do Google Fonts) e o arquivo de estilo principal (`globals.css`). Qualquer elemento colocado aqui, como o `<Toaster>` (para notificações), aparecerá em todas as páginas.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+import type {Metadata} from 'next';
+import './globals.css';
+import { Toaster } from "@/components/ui/toaster"
+
+export const metadata: Metadata = {
+  title: 'Moment Noroeste',
+  description: 'Descubra o seu novo lar no coração do Noroeste.',
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="pt-BR" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="font-body antialiased">
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+
+
+================================================================================
+ARQUIVO: src/app/page.tsx
+================================================================================
+EXPLICAÇÃO:
+Este arquivo representa a página inicial do site, o que o usuário vê quando acessa a URL principal. Ele monta todas as seções da página (Hero, Detalhes, Galeria, Contato, etc.), importa os componentes necessários e busca os links de mídias do arquivo `midias.json`.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
+import ContactForm from "@/components/contact-form";
+import DynamicSummary from "@/components/dynamic-summary";
+import assets from "@/lib/midias.json";
+
+// Navigation links.
+const navLinks = [
+  { href: "#detalhes", label: "O Empreendimento" },
+  { href: "#galeria", label: "Galeria" },
+  { href: "#contato", label: "Contato" },
+];
+
+// Property features data.
+const features = [
+  {
+    icon: <BedDouble className="h-8 w-8 text-primary" />,
+    title: "3 Quartos",
+    description: "Opções com suítes e plantas de 89m² a 112m².",
+  },
+  {
+    icon: <Sparkles className="h-8 w-8 text-primary" />,
+    title: "Lazer na Cobertura",
+    description: "Piscina com vista panorâmica, academia e espaço gourmet.",
+  },
+  {
+    icon: <MapPin className="h-8 w-8 text-primary" />,
+    title: "Localização Nobre",
+    description: "No coração do Noroeste, próximo a parques, comércios e serviços.",
+  },
+  {
+    icon: <Building2 className="h-8 w-8 text-primary" />,
+    title: "Arquitetura Sofisticada",
+    description: "Design moderno com fachada imponente em granito e vidro.",
+  },
+  {
+    icon: <Trees className="h-8 w-8 text-primary" />,
+    title: "Sustentabilidade",
+    description: "Soluções ecológicas como aquecimento solar e reuso de água.",
+  },
+  {
+    icon: <UtensilsCrossed className="h-8 w-8 text-primary" />,
+    title: "Varanda Gourmet",
+    description: "Espaços amplos e integrados para momentos especiais.",
+  },
+];
+
+const { logo, heroImages, galleryImages, virtualTourVideo } = assets;
+
+export default function Home() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex flex-col min-h-[100dvh] bg-secondary text-foreground">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-800 text-primary-foreground backdrop-blur-sm shadow-md">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+          <a href="#" className="flex items-center">
+            <Image src={logo.url} alt={logo.description} width={150} height={40} style={{ filter: 'brightness(0) invert(1)' }}/>
+          </a>
+          <nav className="hidden items-center gap-6 md:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium transition-colors hover:text-gray-300"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <Button asChild className="hidden md:flex bg-gray-50 text-gray-900 hover:bg-gray-200" size="sm">
+            <a href="#contato">Agende uma Visita</a>
+          </Button>
+        </div>
+      </header>
+
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section id="hero" className="relative w-full h-[50vh] md:h-auto md:aspect-[16/9]">
+          {heroImages.map((image, index) => (
+            <Image
+              key={image.src}
+              src={image.src}
+              alt={image.alt}
+              fill
+              className={`object-cover transition-opacity duration-1000 ease-in-out ${
+                index === currentImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+              priority={index === 0}
+              data-ai-hint="modern building exterior"
+            />
+          ))}
+        </section>
+
+        {/* Property Details Section */}
+        <section id="detalhes" className="py-16 md:py-24 bg-secondary">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Um novo conceito de viver bem</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Cada detalhe do Moment Noroeste foi pensado para oferecer uma experiência única de moradia, unindo luxo, conforto e praticidade.
+              </p>
+            </div>
+            <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => (
+                <Card key={feature.title} className="bg-card text-card-foreground border-border/50 shadow-md transition-all hover:shadow-xl hover:-translate-y-1">
+                  <CardHeader className="flex flex-row items-center gap-4 pb-2">
+                    {feature.icon}
+                    <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Video Section */}
+        <section id="video" className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Tour Virtual</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
+              </p>
+            </div>
+            <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
+              <iframe
+                src={virtualTourVideo.url}
+                className="w-full h-full"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+
+        {/* Image Gallery Section */}
+        <section id="galeria" className="py-16 md:py-24 bg-secondary">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Galeria de Imagens</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Inspire-se com os ambientes e a arquitetura do seu futuro lar.
+              </p>
+            </div>
+            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {galleryImages.map((image, index) => (
+                <div key={index} className="group relative overflow-hidden rounded-lg shadow-lg">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={800}
+                    height={600}
+                    className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                    data-ai-hint={image.hint}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-4">
+                    <p className="text-white font-semibold">{image.alt}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section id="contato" className="py-16 md:py-24 bg-secondary">
+          <div className="container mx-auto px-4 md:px-6">
+            <ContactForm />
+          </div>
+        </section>
+
+        {/* Dynamic Summary Section */}
+        <section id="resumo-ia" className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 md:px-6">
+             <DynamicSummary />
+          </div>
+        </section>
+      </main>
+
+      <footer className="bg-primary text-primary-foreground">
+        <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
+          <p className="text-sm flex items-center gap-2">
+            &copy; {new Date().getFullYear()} 
+            <Image src={logo.url} alt={logo.description} width={120} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+            Todos os direitos reservados.
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+
+================================================================================
+ARQUIVO: src/app/actions.ts
+================================================================================
+EXPLICAÇÃO:
+Este arquivo define "Server Actions", que são funções executadas no servidor, não no navegador do usuário. 
+- `getDynamicSummaryAction`: Recebe os interesses do usuário, chama a inteligência artificial (Genkit) para gerar um resumo personalizado da propriedade e retorna o texto.
+- `saveContactAction`: Recebe os dados do formulário de contato e os salva no banco de dados Firestore.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+"use server";
+
+import { generateDynamicPropertySummary } from "@/ai/flows/generate-dynamic-property-summary";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+
+
+const propertyDetails = `
+📍 Empreendimento: MOMENT NOROESTE
+
+Localização: SQNW 104 F, Noroeste, Brasília-DF
+Status da Obra: Fundação concluída e estrutura em andamento (Atualizado em 03/09/2025).
+Previsão de Entrega: Fevereiro/2028 (Fonte: APEX Engenharia)
+Registro de Incorporação: R-11/131.475
+
+---
+
+🏢 Tipos de Apartamentos:
+
+· 3 Quartos (1 Suíte) – 89 m²:
+  - Suíte master com espaço para closet.
+  - Cozinha americana.
+  - Lavabo.
+  - 2 vagas de garagem e depósito.
+
+· 3 Quartos (1 Suíte + 2 Semissuítes) – 112 m²:
+  - Apartamento de canto, vazado.
+  - Sala em dois ambientes.
+  - Lavabo.
+  - 3 vagas de garagem e depósito.
+
+· 3 Suítes – 105 m²:
+  - Apartamento vazado.
+  - Varanda gourmet.
+  - Lavabo e banheiro de serviço.
+  - 2 vagas de garagem e depósito.
+
+---
+
+🎯 Diferenciais das Unidades:
+
+· Acabamento de Alto Padrão: Piso em porcelanato de grande formato, rodapé de 10 cm, bancadas em granito e quartzito.
+· Tecnologia e Conforto: Fechadura eletrônica, infraestrutura para automação (compatível com Alexa/Google), aquecimento solar com complementação a gás.
+· Conforto Acústico: Laje maciça e paredes duplas com tratamento acústico entre as unidades.
+· Praticidade: Infraestrutura para ar condicionado e exaustão na cozinha.
+· Sustentabilidade: Vagas de garagem com preparação para carregador de carro elétrico.
+
+---
+
+🏊 Áreas Comuns e Lazer:
+
+· Complexo Aquático: Piscina adulto e infantil climatizadas (26º–28ºC).
+· Espaços Gourmet: Churrasqueira com piscina exclusiva para convidados.
+· Bem-Estar: Sauna e Spa, academia premium.
+· Conveniência e Social: Salão de festas, brinquedoteca, espaço FIX com kit de ferramentas, bicicletário com Bike Wash.
+· Tecnologia e Segurança: Paisagismo com iluminação LED e sensores, sistema de segurança 24h com reconhecimento facial e CFTV, Wi-Fi nas áreas comuns e gerador de energia.
+
+---
+
+🏗️ Materiais de Fachada e Acabamento:
+
+· Fachada: Revestida em granito ecológico cinza, vidro de alto desempenho térmico, esquadrias de alumínio e chapas metálicas perfuradas.
+· Pilotis: Acabamento em porcelanato e granito, com bancadas em granito polido e mármore.
+
+---
+
+🤝 Construtora e Incorporadora:
+
+· APEX Engenharia: Desde 1976, com mais de 5.000 unidades entregues e 500.000 m² construídos no DF.
+· JARJOUR: Mais de 60 anos de mercado, reconhecida pela solidez e confiança em mais de 100 projetos.
+`;
+
+export async function getDynamicSummaryAction(userInterests: string) {
+  if (!userInterests) {
+    return "Por favor, descreva seus interesses para gerarmos um resumo personalizado.";
+  }
+  try {
+    const result = await generateDynamicPropertySummary({
+      propertyDetails,
+      userInterests,
+    });
+    return result.summary;
+  } catch (error) {
+    console.error("Error generating dynamic summary:", error);
+    return "Desculpe, não foi possível gerar o resumo. Por favor, tente novamente mais tarde.";
+  }
+}
+
+export async function saveContactAction(data: { name: string; email: string; phone: string; interestType: 'morar' | 'investir'; message?: string; }) {
+  try {
+    await addDoc(collection(db, "contacts"), {
+      ...data,
+      createdAt: Timestamp.now(),
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    return { success: false, error: "Falha ao salvar contato." };
+  }
+}
+
+
+================================================================================
+ARQUIVO: src/components/contact-form.tsx
+================================================================================
+EXPLICAÇÃO:
+Este é o componente do formulário de contato. Ele define os campos (Nome, Email, Telefone, etc.), gerencia a validação dos dados (usando `react-hook-form` e `zod`), controla o estado de carregamento (mostrando "Enviando...") e chama a `saveContactAction` para enviar os dados para o servidor quando o usuário clica no botão.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Send, CheckCircle } from "lucide-react";
+import { saveContactAction } from "@/app/actions";
+import { useToast } from "@/hooks/use-toast";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+const formSchema = z.object({
+  name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
+  email: z.string().email("Por favor, insira um email válido."),
+  phone: z.string().min(10, "Por favor, insira um telefone válido com DDD.").max(15, "O telefone parece longo demais."),
+  interestType: z.enum(["morar", "investir"], {
+    required_error: "Você precisa selecionar um objetivo.",
+  }),
+  message: z.string().optional(),
+});
+
+export default function ContactForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+
+    const result = await saveContactAction(values);
+
+    setIsLoading(false);
+
+    if (result.success) {
+      setIsSubmitted(true);
+      form.reset();
+      // Reset isSubmitted state after a while to allow new submissions
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Erro ao enviar",
+        description: result.error || "Não foi possível enviar sua mensagem. Tente novamente mais tarde.",
+      });
+    }
+  }
+
+  if (isSubmitted) {
+    return (
+      <Card className="w-full max-w-2xl mx-auto bg-card shadow-lg">
+        <CardHeader className="items-center text-center p-8">
+            <CheckCircle className="h-12 w-12 text-green-500" />
+            <CardTitle className="mt-4">Obrigado pelo seu interesse!</CardTitle>
+            <CardDescription>Recebemos sua mensagem e entraremos em contato em breve.</CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="w-full max-w-2xl mx-auto bg-card shadow-lg">
+      <CardHeader>
+        <CardTitle>Fale Conosco</CardTitle>
+        <CardDescription>
+          Preencha o formulário abaixo para mais informações ou para agendar uma visita.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome Completo</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Seu nome" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="seu@email.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefone com DDD</FormLabel>
+                    <FormControl>
+                      <Input placeholder="(XX) XXXXX-XXXX" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="interestType"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Qual seu objetivo?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="morar" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Morar
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="investir" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Investir
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Mensagem (Opcional)</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Gostaria de mais informações sobre..."
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  <Send className="mr-2 h-4 w-4" />
+                  Enviar Mensagem
+                </>
+              )}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+}
+
+
+================================================================================
+ARQUIVO: src/components/dynamic-summary.tsx
+================================================================================
+EXPLICAÇÃO:
+Este é o componente da seção "Resumo Personalizado com IA". Ele contém um campo de texto onde o usuário digita seus interesses. Ao clicar em "Gerar Resumo", ele chama a `getDynamicSummaryAction` para obter o texto da IA e exibe o resultado na tela, junto com um indicador de carregamento.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { getDynamicSummaryAction } from "@/app/actions";
+import { Loader2, Wand2 } from "lucide-react";
+
+const formSchema = z.object({
+  interests: z.string().min(5, {
+    message: "Descreva seus interesses com pelo menos 5 caracteres.",
+  }),
+});
+
+export default function DynamicSummary() {
+  const [summary, setSummary] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      interests: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    setSummary("");
+    const result = await getDynamicSummaryAction(values.interests);
+    setSummary(result);
+    setIsLoading(false);
+  }
+
+  return (
+    <Card className="w-full max-w-2xl mx-auto bg-card shadow-lg">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Wand2 className="text-primary" />
+              Resumo Personalizado com IA
+            </CardTitle>
+            <CardDescription>
+              Diga-nos o que você mais valoriza em um imóvel (ex: 'espaço para família', 'lazer completo', 'investimento') e nossa IA criará um resumo do Moment Noroeste para você.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FormField
+              control={form.control}
+              name="interests"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Seus Interesses</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ex: Lazer para crianças e segurança" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {isLoading && (
+              <div className="mt-4 flex items-center justify-center text-muted-foreground">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Gerando resumo...
+              </div>
+            )}
+            {summary && !isLoading && (
+              <div className="mt-6 rounded-lg border bg-secondary p-4 text-sm">
+                <p>{summary}</p>
+              </div>
+            )}
+          </CardContent>
+          <CardFooter>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Gerando...
+                </>
+              ) : (
+                "Gerar Resumo"
+              )}
+            </Button>
+          </CardFooter>
+        </form>
+      </Form>
+    </Card>
+  );
+}
+
+
+================================================================================
+ARQUIVO: src/lib/firebase.ts
+================================================================================
+EXPLICAÇÃO:
+Arquivo de configuração do Firebase. Ele contém as chaves e credenciais do seu projeto Firebase, necessárias para que o aplicativo possa se conectar e usar os serviços da plataforma, como o banco de dados Firestore.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  projectId: "momento-noroeste",
+  appId: "1:571106287682:web:6947cdc30ea42549828ddb",
+  storageBucket: "momento-noroeste.firebasestorage.app",
+  apiKey: "AIzaSyDk9c4uF1TxxSnS2J0-CDAlanjKBG7TuyI",
+  authDomain: "momento-noroeste.firebaseapp.com",
+  measurementId: "",
+  messagingSenderId: "571106287682",
+};
+
+// Initialize Firebase
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore(app);
+
+export { app, db };
+
+
+================================================================================
+ARQUIVO: src/lib/midias.json
+================================================================================
+EXPLICAÇÃO:
+Este arquivo centraliza todos os links para as mídias (imagens e vídeos) usadas no site. Ele serve como um catálogo, onde cada item tem uma URL, um texto alternativo (`alt`) e uma descrição. A página principal lê este arquivo para exibir as mídias.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+{
+  "logo": {
+    "url": "https://i.imgur.com/cSRvYaG.png",
+    "description": "Logo do empreendimento Moment Noroeste, usado no cabeçalho e rodapé."
+  },
+  "heroImages": [
+    {
+      "src": "https://i.imgur.com/eWcADeW.jpeg",
+      "alt": "Fachada Manhã",
+      "description": "Imagem da fachada do prédio durante a manhã, usada na seção principal (hero)."
+    },
+    {
+      "src": "https://i.imgur.com/q0FFXgt.jpeg",
+      "alt": "Fachada Tarde",
+      "description": "Imagem da fachada do prédio durante a tarde, usada na seção principal (hero)."
+    },
+    {
+      "src": "https://i.imgur.com/LIbagMB.jpeg",
+      "alt": "Fachada Noturna",
+      "description": "Imagem da fachada do prédio durante a noite, usada na seção principal (hero)."
+    }
+  ],
+  "galleryImages": [
+    {
+      "src": "https://i.imgur.com/eWcADeW.jpeg",
+      "alt": "Fachada Manhã",
+      "hint": "living area perspective",
+      "description": "Imagem da fachada do prédio durante a manhã, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/q0FFXgt.jpeg",
+      "alt": "Fachada Tarde",
+      "hint": "apartment perspective",
+      "description": "Imagem da fachada do prédio durante a tarde, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/LIbagMB.jpeg",
+      "alt": "Fachada Noturna",
+      "hint": "night facade",
+      "description": "Imagem da fachada do prédio durante a noite, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/FE1qVSb.jpeg",
+      "alt": "Pespectiva Piscina Infantil",
+      "hint": "kids pool",
+      "description": "Imagem da piscina infantil, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/sfMVYuP.jpeg",
+      "alt": "Pespectiva Piscina Adulto",
+      "hint": "rooftop pool",
+      "description": "Imagem da piscina na cobertura, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/xDuipUU.jpeg",
+      "alt": "Varanda Gourmet",
+      "hint": "gourmet balcony",
+      "description": "Imagem da varanda gourmet de um apartamento, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/77q2sZi.jpeg",
+      "alt": "Salão De Festa",
+      "hint": "party room",
+      "description": "Imagem do salão de festas, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/3MImlsx.jpeg",
+      "alt": "Localização - SQNW 104 F, Noroeste",
+      "hint": "location map",
+      "description": "Imagem do mapa de localização do empreendimento, usada na galeria."
+    }
+  ],
+  "virtualTourVideo": {
+    "url": "https://player.vimeo.com/video/1115548444?loop=1&autoplay=1&muted=1",
+    "description": "Vídeo do tour virtual pelo apartamento decorado, usado na seção de vídeo."
+  }
+}
+
+
+================================================================================
+ARQUIVO: src/lib/midias.txt
+================================================================================
+EXPLICAÇÃO:
+Este é um arquivo de texto que serve como um espelho do `midias.json`. Ele existe apenas para facilitar a visualização de todos os links de mídia em um formato de texto simples.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+{
+  "logo": {
+    "url": "https://i.imgur.com/cSRvYaG.png",
+    "description": "Logo do empreendimento Moment Noroeste, usado no cabeçalho e rodapé."
+  },
+  "heroImages": [
+    {
+      "src": "https://i.imgur.com/eWcADeW.jpeg",
+      "alt": "Fachada Manhã",
+      "description": "Imagem da fachada do prédio durante a manhã, usada na seção principal (hero)."
+    },
+    {
+      "src": "https://i.imgur.com/q0FFXgt.jpeg",
+      "alt": "Fachada Tarde",
+      "description": "Imagem da fachada do prédio durante a tarde, usada na seção principal (hero)."
+    },
+    {
+      "src": "https://i.imgur.com/LIbagMB.jpeg",
+      "alt": "Fachada Noturna",
+      "description": "Imagem da fachada do prédio durante a noite, usada na seção principal (hero)."
+    }
+  ],
+  "galleryImages": [
+    {
+      "src": "https://i.imgur.com/eWcADeW.jpeg",
+      "alt": "Fachada Manhã",
+      "hint": "living area perspective",
+      "description": "Imagem da fachada do prédio durante a manhã, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/q0FFXgt.jpeg",
+      "alt": "Fachada Tarde",
+      "hint": "apartment perspective",
+      "description": "Imagem da fachada do prédio durante a tarde, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/LIbagMB.jpeg",
+      "alt": "Fachada Noturna",
+      "hint": "night facade",
+      "description": "Imagem da fachada do prédio durante a noite, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/FE1qVSb.jpeg",
+      "alt": "Pespectiva Piscina Infantil",
+      "hint": "kids pool",
+      "description": "Imagem da piscina infantil, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/sfMVYuP.jpeg",
+      "alt": "Pespectiva Piscina Adulto",
+      "hint": "rooftop pool",
+      "description": "Imagem da piscina na cobertura, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/xDuipUU.jpeg",
+      "alt": "Varanda Gourmet",
+      "hint": "gourmet balcony",
+      "description": "Imagem da varanda gourmet de um apartamento, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/77q2sZi.jpeg",
+      "alt": "Salão De Festa",
+      "hint": "party room",
+      "description": "Imagem do salão de festas, usada na galeria."
+    },
+    {
+      "src": "https://i.imgur.com/3MImlsx.jpeg",
+      "alt": "Localização - SQNW 104 F, Noroeste",
+      "hint": "location map",
+      "description": "Imagem do mapa de localização do empreendimento, usada na galeria."
+    }
+  ],
+  "virtualTourVideo": {
+    "url": "https://player.vimeo.com/video/1115548444?loop=1&autoplay=1&muted=1",
+    "description": "Vídeo do tour virtual pelo apartamento decorado, usado na seção de vídeo."
+  }
+}
+
+
+================================================================================
+ARQUIVO: src/app/globals.css
+================================================================================
+EXPLICAÇÃO:
+Este arquivo define os estilos globais do site, incluindo as variáveis de cores (para os modos claro e escuro), fontes e outros estilos base que se aplicam a todo o aplicativo. É aqui que o tema de cores principal (background, primary, accent, etc.) é definido.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 40 13% 96%;
+    --foreground: 25 30% 27%;
+    --card: 40 20% 94%;
+    --card-foreground: 25 30% 27%;
+    --popover: 40 20% 94%;
+    --popover-foreground: 25 30% 27%;
+    --primary: 25 30% 27%;
+    --primary-foreground: 40 13% 96%;
+    --secondary: 40 13% 96%;
+    --secondary-foreground: 25 30% 27%;
+    --muted: 203 22% 85%;
+    --muted-foreground: 25 30% 40%;
+    --accent: 0 0% 63%;
+    --accent-foreground: 25 30% 27%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 203 22% 79%;
+    --input: 203 22% 79%;
+    --ring: 25 30% 27%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --background: 25 30% 17%;
+    --foreground: 40 13% 96%;
+    --card: 25 30% 20%;
+    --card-foreground: 40 13% 96%;
+    --popover: 25 30% 17%;
+    --popover-foreground: 40 13% 96%;
+    --primary: 40 13% 96%;
+    --primary-foreground: 25 30% 17%;
+    --secondary: 25 30% 22%;
+    --secondary-foreground: 40 13% 96%;
+    --muted: 25 30% 30%;
+    --muted-foreground: 40 13% 80%;
+    --accent: 0 0% 63%;
+    --accent-foreground: 40 13% 96%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 25 30% 30%;
+    --input: 25 30% 30%;
+    --ring: 40 13% 96%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+================================================================================
+ARQUIVO: tailwind.config.ts
+================================================================================
+EXPLICAÇÃO:
+Este é o arquivo de configuração do Tailwind CSS, a ferramenta usada para estilizar o site. Ele define as fontes, as cores e os tamanhos que o Tailwind pode usar. As cores definidas aqui usam as variáveis CSS do arquivo `globals.css`.
+
+--------------------------------------------------------------------------------
+CÓDIGO:
+--------------------------------------------------------------------------------
+import type {Config} from 'tailwindcss';
+
+export default {
+  darkMode: ['class'],
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        body: ['Inter', 'sans-serif'],
+        headline: ['Inter', 'sans-serif'],
+        code: ['monospace'],
+      },
+      colors: {
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+    },
+  },
+  plugins: [require('tailwindcss-animate')],
+} satisfies Config;
+

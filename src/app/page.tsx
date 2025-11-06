@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
 import ContactForm from "@/components/contact-form";
 import DynamicSummary from "@/components/dynamic-summary";
-import assets from "@/lib/assets.json";
+import assets from "@/lib/midias.json";
 
 // Navigation links.
 const navLinks = [

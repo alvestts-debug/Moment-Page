@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
 import ContactForm from "@/components/contact-form";
 import DynamicSummary from "@/components/dynamic-summary";
+import assets from "@/lib/assets.json";
 
 // Navigation links.
 const navLinks = [
@@ -49,31 +50,14 @@ const features = [
   },
 ];
 
-const facadeImages = [
-  { src: "https://i.imgur.com/eWcADeW.jpeg", alt: "Fachada Manhã" },
-  { src: "https://i.imgur.com/q0FFXgt.jpeg", alt: "Fachada Tarde" },
-  { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna" },
-];
-
-
-// Gallery images data.
-const galleryImages = [
-  { src: "https://i.imgur.com/eWcADeW.jpeg", alt: "Fachada Manhã", hint: "living area perspective" },
-  { src: "https://i.imgur.com/q0FFXgt.jpeg", alt: "Fachada Tarde", hint: "apartment perspective" },
-  { src: "https://i.imgur.com/LIbagMB.jpeg", alt: "Fachada Noturna", hint: "night facade" },
-  { src: "https://i.imgur.com/FE1qVSb.jpeg", alt: "Pespectiva Piscina Infantil", hint: "kids pool" },
-  { src: "https://i.imgur.com/sfMVYuP.jpeg", alt: "Pespectiva Piscina Adulto", hint: "rooftop pool" },
-  { src: "https://i.imgur.com/xDuipUU.jpeg", alt: "Varanda Gourmet", hint: "gourmet balcony" },
-  { src: "https://i.imgur.com/77q2sZi.jpeg", alt: "Salão De Festa", hint: "party room" },
-  { src: "https://i.imgur.com/3MImlsx.jpeg", alt: "Localização - SQNW 104 F, Noroeste", hint: "location map" },
-];
+const { logo, heroImages, galleryImages, virtualTourVideo } = assets;
 
 export default function Home() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % facadeImages.length);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 5000); // Change image every 5 seconds
 
     return () => clearInterval(interval);
@@ -84,7 +68,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-gray-800 text-primary-foreground backdrop-blur-sm shadow-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <a href="#" className="flex items-center">
-            <Image src="https://i.imgur.com/cSRvYaG.png" alt="Moment Noroeste Logo" width={150} height={40} style={{ filter: 'brightness(0) invert(1)' }}/>
+            <Image src={logo.url} alt={logo.description} width={150} height={40} style={{ filter: 'brightness(0) invert(1)' }}/>
           </a>
           <nav className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
@@ -106,7 +90,7 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section id="hero" className="relative w-full h-[50vh] md:h-auto md:aspect-[16/9]">
-          {facadeImages.map((image, index) => (
+          {heroImages.map((image, index) => (
             <Image
               key={image.src}
               src={image.src}
@@ -157,7 +141,7 @@ export default function Home() {
             </div>
             <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
               <iframe
-                src="https://player.vimeo.com/video/1115548444?loop=1&autoplay=1&muted=1"
+                src={virtualTourVideo.url}
                 className="w-full h-full"
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
@@ -215,7 +199,7 @@ export default function Home() {
         <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
           <p className="text-sm flex items-center gap-2">
             &copy; {new Date().getFullYear()} 
-            <Image src="https://i.imgur.com/cSRvYaG.png" alt="Moment Noroeste Logo" width={120} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+            <Image src={logo.url} alt={logo.description} width={120} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
             Todos os direitos reservados.
           </p>
         </div>

@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
 import ContactForm from "@/components/contact-form";
-import DynamicSummary from "@/components/dynamic-summary";
 import assets from "@/lib/midias.json";
 
 // Navigation links.
@@ -181,16 +180,9 @@ export default function Home() {
         </section>
 
         {/* Contact Form Section */}
-        <section id="contato" className="py-16 md:py-24 bg-secondary">
+        <section id="contato" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <ContactForm />
-          </div>
-        </section>
-
-        {/* Dynamic Summary Section */}
-        <section id="resumo-ia" className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-             <DynamicSummary />
           </div>
         </section>
       </main>

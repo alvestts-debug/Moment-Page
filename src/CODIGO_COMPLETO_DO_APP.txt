@@ -135,7 +135,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
 import ContactForm from "@/components/contact-form";
-import DynamicSummary from "@/components/dynamic-summary";
 import assets from "@/lib/midias.json";
 
 // Navigation links.
@@ -310,16 +309,9 @@ export default function Home() {
         </section>
 
         {/* Contact Form Section */}
-        <section id="contato" className="py-16 md:py-24 bg-secondary">
+        <section id="contato" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <ContactForm />
-          </div>
-        </section>
-
-        {/* Dynamic Summary Section */}
-        <section id="resumo-ia" className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-             <DynamicSummary />
           </div>
         </section>
       </main>
@@ -343,7 +335,6 @@ ARQUIVO: src/app/actions.ts
 ================================================================================
 EXPLICAÇÃO:
 Este arquivo define "Server Actions", que são funções executadas no servidor, não no navegador do usuário. 
-- `getDynamicSummaryAction`: Recebe os interesses do usuário, chama a inteligência artificial (Genkit) para gerar um resumo personalizado da propriedade e retorna o texto.
 - `saveContactAction`: Recebe os dados do formulário de contato e os salva no banco de dados Firestore.
 
 --------------------------------------------------------------------------------
@@ -351,91 +342,8 @@ CÓDIGO:
 --------------------------------------------------------------------------------
 "use server";
 
-import { generateDynamicPropertySummary } from "@/ai/flows/generate-dynamic-property-summary";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-
-
-const propertyDetails = `
-📍 Empreendimento: MOMENT NOROESTE
-
-Localização: SQNW 104 F, Noroeste, Brasília-DF
-Status da Obra: Fundação concluída e estrutura em andamento (Atualizado em 03/09/2025).
-Previsão de Entrega: Fevereiro/2028 (Fonte: APEX Engenharia)
-Registro de Incorporação: R-11/131.475
-
----
-
-🏢 Tipos de Apartamentos:
-
-· 3 Quartos (1 Suíte) – 89 m²:
-  - Suíte master com espaço para closet.
-  - Cozinha americana.
-  - Lavabo.
-  - 2 vagas de garagem e depósito.
-
-· 3 Quartos (1 Suíte + 2 Semissuítes) – 112 m²:
-  - Apartamento de canto, vazado.
-  - Sala em dois ambientes.
-  - Lavabo.
-  - 3 vagas de garagem e depósito.
-
-· 3 Suítes – 105 m²:
-  - Apartamento vazado.
-  - Varanda gourmet.
-  - Lavabo e banheiro de serviço.
-  - 2 vagas de garagem e depósito.
-
----
-
-🎯 Diferenciais das Unidades:
-
-· Acabamento de Alto Padrão: Piso em porcelanato de grande formato, rodapé de 10 cm, bancadas em granito e quartzito.
-· Tecnologia e Conforto: Fechadura eletrônica, infraestrutura para automação (compatível com Alexa/Google), aquecimento solar com complementação a gás.
-· Conforto Acústico: Laje maciça e paredes duplas com tratamento acústico entre as unidades.
-· Praticidade: Infraestrutura para ar condicionado e exaustão na cozinha.
-· Sustentabilidade: Vagas de garagem com preparação para carregador de carro elétrico.
-
----
-
-🏊 Áreas Comuns e Lazer:
-
-· Complexo Aquático: Piscina adulto e infantil climatizadas (26º–28ºC).
-· Espaços Gourmet: Churrasqueira com piscina exclusiva para convidados.
-· Bem-Estar: Sauna e Spa, academia premium.
-· Conveniência e Social: Salão de festas, brinquedoteca, espaço FIX com kit de ferramentas, bicicletário com Bike Wash.
-· Tecnologia e Segurança: Paisagismo com iluminação LED e sensores, sistema de segurança 24h com reconhecimento facial e CFTV, Wi-Fi nas áreas comuns e gerador de energia.
-
----
-
-🏗️ Materiais de Fachada e Acabamento:
-
-· Fachada: Revestida em granito ecológico cinza, vidro de alto desempenho térmico, esquadrias de alumínio e chapas metálicas perfuradas.
-· Pilotis: Acabamento em porcelanato e granito, com bancadas em granito polido e mármore.
-
----
-
-🤝 Construtora e Incorporadora:
-
-· APEX Engenharia: Desde 1976, com mais de 5.000 unidades entregues e 500.000 m² construídos no DF.
-· JARJOUR: Mais de 60 anos de mercado, reconhecida pela solidez e confiança em mais de 100 projetos.
-`;
-
-export async function getDynamicSummaryAction(userInterests: string) {
-  if (!userInterests) {
-    return "Por favor, descreva seus interesses para gerarmos um resumo personalizado.";
-  }
-  try {
-    const result = await generateDynamicPropertySummary({
-      propertyDetails,
-      userInterests,
-    });
-    return result.summary;
-  } catch (error) {
-    console.error("Error generating dynamic summary:", error);
-    return "Desculpe, não foi possível gerar o resumo. Por favor, tente novamente mais tarde.";
-  }
-}
 
 export async function saveContactAction(data: { name: string; email: string; phone: string; interestType: 'morar' | 'investir'; message?: string; }) {
   try {
@@ -653,111 +561,6 @@ export default function ContactForm() {
           </form>
         </Form>
       </CardContent>
-    </Card>
-  );
-}
-
-
-================================================================================
-ARQUIVO: src/components/dynamic-summary.tsx
-================================================================================
-EXPLICAÇÃO:
-Este é o componente da seção "Resumo Personalizado com IA". Ele contém um campo de texto onde o usuário digita seus interesses. Ao clicar em "Gerar Resumo", ele chama a `getDynamicSummaryAction` para obter o texto da IA e exibe o resultado na tela, junto com um indicador de carregamento.
-
---------------------------------------------------------------------------------
-CÓDIGO:
---------------------------------------------------------------------------------
-"use client";
-
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { getDynamicSummaryAction } from "@/app/actions";
-import { Loader2, Wand2 } from "lucide-react";
-
-const formSchema = z.object({
-  interests: z.string().min(5, {
-    message: "Descreva seus interesses com pelo menos 5 caracteres.",
-  }),
-});
-
-export default function DynamicSummary() {
-  const [summary, setSummary] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      interests: "",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    setSummary("");
-    const result = await getDynamicSummaryAction(values.interests);
-    setSummary(result);
-    setIsLoading(false);
-  }
-
-  return (
-    <Card className="w-full max-w-2xl mx-auto bg-card shadow-lg">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Wand2 className="text-primary" />
-              Resumo Personalizado com IA
-            </CardTitle>
-            <CardDescription>
-              Diga-nos o que você mais valoriza em um imóvel (ex: 'espaço para família', 'lazer completo', 'investimento') e nossa IA criará um resumo do Moment Noroeste para você.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="interests"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Seus Interesses</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Ex: Lazer para crianças e segurança" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {isLoading && (
-              <div className="mt-4 flex items-center justify-center text-muted-foreground">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Gerando resumo...
-              </div>
-            )}
-            {summary && !isLoading && (
-              <div className="mt-6 rounded-lg border bg-secondary p-4 text-sm">
-                <p>{summary}</p>
-              </div>
-            )}
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Gerando...
-                </>
-              ) : (
-                "Gerar Resumo"
-              )}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
     </Card>
   );
 }
@@ -1174,4 +977,5 @@ export default {
   },
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;
+
 

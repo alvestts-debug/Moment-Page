@@ -12,13 +12,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2, Send, CheckCircle } from "lucide-react";
 import { saveContactAction } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Importe o Select
 import ReactInputMask from "react-input-mask";
 
-// ATENÇÃO: O campo 'interestType' foi removido do schema por enquanto
 const formSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
   email: z.string().email("Por favor, insira um email válido."),
   phone: z.string().min(14, "Por favor, insira um telefone válido.").max(15, "O telefone parece longo demais."),
+  interestType: z.enum(["morar", "investir"], {
+    required_error: "Você precisa selecionar um objetivo.",
+  }),
+  incomeRange: z.string({ required_error: "Selecione uma faixa de renda." }), // Novo campo
   message: z.string().optional(),
 });
 
@@ -33,15 +38,15 @@ export default function ContactForm() {
       name: "",
       email: "",
       phone: "",
+      interestType: undefined, // Deixe como undefined para forçar a escolha
+      incomeRange: "", // Novo campo
       message: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    // Temporariamente, adicionamos um valor fixo para o interesse
-    const dataToSend = { ...values, interestType: 'morar' as const };
-    const result = await saveContactAction(dataToSend);
+    const result = await saveContactAction(values);
     setIsLoading(false);
 
     if (result.success) {
@@ -127,7 +132,62 @@ export default function ContactForm() {
                 )}
               />
             </div>
-            {/* A SEÇÃO DO RADIOGROUP FOI COMENTADA/REMOVIDA */}
+            <FormField
+              control={form.control}
+              name="interestType"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Qual seu objetivo?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="morar" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Morar
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="investir" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Investir
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="incomeRange"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Faixa de Renda</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione uma faixa de renda" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="5k-9k">R$ 5.000 a R$ 9.000</SelectItem>
+                      <SelectItem value="10k-15k">R$ 10.000 a R$ 15.000</SelectItem>
+                      <SelectItem value="16k+">R$ 16.000 ou mais</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="message"

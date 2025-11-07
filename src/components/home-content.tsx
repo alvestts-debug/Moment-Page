@@ -171,4 +171,31 @@ export default function HomeContent() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-4">
-                    <p className="text-white fon
+                    <p className="text-white font-semibold">{image.alt}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section id="contato" className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 md:px-6">
+            <ContactForm />
+          </div>
+        </section>
+      </main>
+
+      <footer className="bg-primary text-primary-foreground">
+        <div className="container mx-auto flex h-16 items-center justify-center px-4 md:px-6">
+          <p className="text-sm flex items-center gap-2">
+            &copy; {new Date().getFullYear()} 
+            <Image src={logo.url} alt={logo.description} width={120} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+            Todos os direitos reservados.
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}

@@ -13,11 +13,12 @@ import { Loader2, Send, CheckCircle } from "lucide-react";
 import { saveContactAction } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import ReactInputMask from "react-input-mask";
 
 const formSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
   email: z.string().email("Por favor, insira um email válido."),
-  phone: z.string().min(10, "Por favor, insira um telefone válido com DDD.").max(15, "O telefone parece longo demais."),
+  phone: z.string().min(14, "Por favor, insira um telefone válido.").max(15, "O telefone parece longo demais."),
   interestType: z.enum(["morar", "investir"], {
     required_error: "Você precisa selecionar um objetivo.",
   }),
@@ -41,15 +42,12 @@ export default function ContactForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-
     const result = await saveContactAction(values);
-
     setIsLoading(false);
 
     if (result.success) {
       setIsSubmitted(true);
       form.reset();
-      // Reset isSubmitted state after a while to allow new submissions
       setTimeout(() => setIsSubmitted(false), 5000);
     } else {
       toast({
@@ -117,7 +115,13 @@ export default function ContactForm() {
                   <FormItem>
                     <FormLabel>Telefone com DDD</FormLabel>
                     <FormControl>
-                      <Input placeholder="(XX) XXXXX-XXXX" {...field} />
+                      <ReactInputMask
+                        mask="(99) 99999-9999"
+                        value={field.value}
+                        onChange={field.onChange}
+                      >
+                        {(inputProps) => <Input placeholder="(XX) XXXXX-XXXX" {...inputProps} />}
+                      </ReactInputMask>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

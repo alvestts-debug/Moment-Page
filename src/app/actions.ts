@@ -2,10 +2,11 @@
 
 import { Resend } from 'resend';
 
-// Inicializa o cliente Resend com a chave de API do ambiente
+// Log para verificar se a chave da API está sendo carregada
+console.log("RESEND_API_KEY:", process.env.RESEND_API_KEY ? "Carregada" : "NÃO CARREGADA");
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Dados do formulário que esperamos receber
 interface ContactData {
   name: string;
   email: string;
@@ -16,16 +17,16 @@ interface ContactData {
 
 export async function saveContactAction(data: ContactData) {
   try {
-    // Envia a notificação por e-mail
     const { data: emailData, error } = await resend.emails.send({
-      from: 'Moment Noroeste <nao-responda@seu-dominio.com>', // Use um e-mail verificado na Resend
-      to: ['alvestts@gmail.com'], // O e-mail foi configurado aqui!
+      // IMPORTANTE: Usamos 'onboarding@resend.dev' que não exige verificação de domínio.
+      from: 'Moment Noroeste <onboarding@resend.dev>',
+      to: ['alvestts@gmail.com'],
       subject: `Novo Contato no Site: ${data.name}`,
       html: generateEmailHtml(data),
     });
 
     if (error) {
-      console.error("Erro ao enviar e-mail via Resend:", error);
+      console.error("Erro detalhado da Resend:", error);
       return { success: false, error: "Falha ao enviar sua mensagem. Tente novamente." };
     }
 

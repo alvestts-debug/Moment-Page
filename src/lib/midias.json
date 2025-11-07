@@ -41,19 +41,19 @@
     },
     {
       "src": "https://i.imgur.com/FE1qVSb.jpeg",
-      "alt": "Pespectiva Piscina Infantil",
+      "alt": "Perspectiva Piscina Infantil",
       "hint": "kids pool",
       "description": "Imagem da piscina infantil, usada na galeria."
     },
     {
       "src": "https://i.imgur.com/sfMVYuP.jpeg",
-      "alt": "Pespectiva Piscina Adulto",
+      "alt": "Perspectiva Piscina Adulto",
       "hint": "rooftop pool",
       "description": "Imagem da piscina na cobertura, usada na galeria."
     },
     {
       "src": "https://i.imgur.com/xDuipUU.jpeg",
-      "alt": "Espaço Gourmet", // <-- ALTERADO AQUI
+      "alt": "Espaço Gourmet",
       "hint": "gourmet balcony",
       "description": "Imagem do espaço gourmet de um apartamento, usada na galeria."
     },

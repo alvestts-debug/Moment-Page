@@ -44,7 +44,7 @@ const features = [
   },
   {
     icon: <UtensilsCrossed className="h-8 w-8 text-primary" />,
-    title: "Varanda Gourmet",
+    title: "Espaço Gourmet", // <-- ALTERADO AQUI
     description: "Espaços amplos e integrados para momentos especiais.",
   },
 ];
@@ -143,7 +143,6 @@ export default function HomeContent() {
                 src={virtualTourVideo.url}
                 className="w-full h-full"
                 allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
               ></iframe>
             </div>
           </div>

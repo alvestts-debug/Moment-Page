@@ -17,7 +17,7 @@ interface ContactData {
 export async function saveContactAction(data: ContactData) {
   try {
     // Envia a notificação por e-mail
-    const { error, data: emailData } = await resend.emails.send({
+    const { data: emailData, error } = await resend.emails.send({
       from: 'Moment Noroeste <nao-responda@seu-dominio.com>', // Use um e-mail verificado na Resend
       to: ['alvestts@gmail.com'], // O e-mail foi configurado aqui!
       subject: `Novo Contato no Site: ${data.name}`,

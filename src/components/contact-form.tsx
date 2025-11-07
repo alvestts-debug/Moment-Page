@@ -13,7 +13,7 @@ import { Loader2, Send, CheckCircle } from "lucide-react";
 import { saveContactAction } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Importe o Select
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ReactInputMask from "react-input-mask";
 
 const formSchema = z.object({
@@ -23,7 +23,7 @@ const formSchema = z.object({
   interestType: z.enum(["morar", "investir"], {
     required_error: "Você precisa selecionar um objetivo.",
   }),
-  incomeRange: z.string({ required_error: "Selecione uma faixa de renda." }), // Novo campo
+  incomeRange: z.string({ required_error: "Selecione uma faixa de renda." }),
   message: z.string().optional(),
 });
 
@@ -38,8 +38,8 @@ export default function ContactForm() {
       name: "",
       email: "",
       phone: "",
-      interestType: undefined, // Deixe como undefined para forçar a escolha
-      incomeRange: "", // Novo campo
+      interestType: undefined,
+      incomeRange: "",
       message: "",
     },
   });
@@ -180,8 +180,9 @@ export default function ContactForm() {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="5k-9k">R$ 5.000 a R$ 9.000</SelectItem>
-                      <SelectItem value="10k-15k">R$ 10.000 a R$ 15.000</SelectItem>
-                      <SelectItem value="16k+">R$ 16.000 ou mais</SelectItem>
+                      <SelectItem value="10k-13k">R$ 10.000 a R$ 13.000</SelectItem>
+                      <SelectItem value="14k-18k">R$ 14.000 a R$ 18.000</SelectItem>
+                      <SelectItem value="20k+">R$ 20.000 ou mais</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

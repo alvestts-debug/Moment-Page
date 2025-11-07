@@ -1,5 +1,9 @@
-import type { Metadata } from 'next'; // <-- Corrigido: faltava o sinal '>'
-import HomeContent from '@/components/home-content'; // Importa o novo componente
+import type { Metadata } from 'next';
+import HomeContent from '@/components/home-content';
+
+// Força a renderização dinâmica, impedindo o erro de prerendering
+// com hooks que dependem de contexto (como useToast).
+export const dynamic = 'force-dynamic';
 
 // Este é um Server Component, então pode exportar metadados
 export const metadata: Metadata = {

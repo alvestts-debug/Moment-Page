@@ -53,9 +53,9 @@
     },
     {
       "src": "https://i.imgur.com/xDuipUU.jpeg",
-      "alt": "Varanda Gourmet",
+      "alt": "Espaço Gourmet", // <-- ALTERADO AQUI
       "hint": "gourmet balcony",
-      "description": "Imagem da varanda gourmet de um apartamento, usada na galeria."
+      "description": "Imagem do espaço gourmet de um apartamento, usada na galeria."
     },
     {
       "src": "https://i.imgur.com/77q2sZi.jpeg",

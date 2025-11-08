@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Adicionei useRef
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed, Play, Pause, VolumeX } from "lucide-react"; // Adicionei ícones de controle
 import ContactForm from "@/components/contact-form";
 import assets from "@/lib/midias.json";
 
@@ -44,20 +44,21 @@ const features = [
   },
   {
     icon: <UtensilsCrossed className="h-8 w-8 text-primary" />,
-    title: "Espaço Gourmet", // <-- ALTERADO AQUI
+    title: "Espaço Gourmet",
     description: "Espaços amplos e integrados para momentos especiais.",
   },
 ];
 
-const { logo, heroImages, galleryImages, virtualTourVideo } = assets;
+const { logo, heroImages, galleryImages } = assets; // Removido virtualTourVideo
 
 export default function HomeContent() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 5000); // Change image every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -129,7 +130,7 @@ export default function HomeContent() {
           </div>
         </section>
         
-        {/* Video Section */}
+        {/* Video Section - AGORA COM PLAYER CUSTOMIZADO */}
         <section id="video" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
@@ -138,12 +139,19 @@ export default function HomeContent() {
                 Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
               </p>
             </div>
-            <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
-              <iframe
-                src={virtualTourVideo.url}
+            <div className="mt-12 mx-auto max-w-2xl aspect-[9/16] overflow-hidden rounded-lg shadow-2xl bg-black">
+              <video
+                ref={videoRef}
                 className="w-full h-full"
-                allow="autoplay; fullscreen; picture-in-picture"
-              ></iframe>
+                controls // Mostra os controles padrão do navegador (play, pause, barra de progresso, volume, etc.)
+                autoPlay
+                muted
+                loop
+                poster="https://i.imgur.com/sfMVYuP.jpeg" // Imagem de capa enquanto o vídeo carrega
+              >
+                <source src="/videos/tour-virtual.mp4" type="video/mp4" />
+                Seu navegador não suporta a tag de vídeo.
+              </video>
             </div>
           </div>
         </section>

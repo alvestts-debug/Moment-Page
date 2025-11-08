@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react"; // Adicionei useRef
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed, Play, Pause, VolumeX } from "lucide-react"; // Adicionei ícones de controle
+import { ArrowRight, BedDouble, Building2, MapPin, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
 import ContactForm from "@/components/contact-form";
+import ImageModal from "@/components/image-modal";
 import assets from "@/lib/midias.json";
 
 // Navigation links.
@@ -49,11 +50,13 @@ const features = [
   },
 ];
 
-const { logo, heroImages, galleryImages } = assets; // Removido virtualTourVideo
+const { logo, heroImages, galleryImages } = assets;
 
 export default function HomeContent() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Estados para o modal
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,6 +65,17 @@ export default function HomeContent() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Funções para controlar o modal
+  const openModal = (image: { src: string; alt: string }) => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-secondary text-foreground">
@@ -130,7 +144,7 @@ export default function HomeContent() {
           </div>
         </section>
         
-        {/* Video Section - AGORA COM PLAYER CUSTOMIZADO */}
+        {/* Video Section - COM MELHORIAS */}
         <section id="video" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
@@ -139,15 +153,16 @@ export default function HomeContent() {
                 Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
               </p>
             </div>
-            <div className="mt-12 mx-auto max-w-2xl aspect-[9/16] overflow-hidden rounded-lg shadow-2xl bg-black">
+            <div className="mt-12 mx-auto max-w-2xl aspect-[9/16] overflow-hidden rounded-lg shadow-2xl bg-black flex items-center justify-center">
               <video
-                ref={videoRef}
                 className="w-full h-full"
-                controls // Mostra os controles padrão do navegador (play, pause, barra de progresso, volume, etc.)
+                controls
                 autoPlay
                 muted
                 loop
-                poster="https://i.imgur.com/sfMVYuP.jpeg" // Imagem de capa enquanto o vídeo carrega
+                playsInline
+                poster="https://i.imgur.com/sfMVYuP.jpeg"
+                preload="auto"
               >
                 <source src="/videos/tour-virtual.mp4" type="video/mp4" />
                 Seu navegador não suporta a tag de vídeo.
@@ -156,24 +171,28 @@ export default function HomeContent() {
           </div>
         </section>
 
-        {/* Image Gallery Section */}
+        {/* Image Gallery Section - COM CLIQUE E MODAL */}
         <section id="galeria" className="py-16 md:py-24 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Galeria de Imagens</h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Inspire-se com os ambientes e a arquitetura do seu futuro lar.
+                Inspire-se com os ambientes e a arquitetura do seu futuro lar. Clique na imagem para ampliar.
               </p>
             </div>
             <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {galleryImages.map((image, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-lg shadow-lg">
+                <div
+                  key={index}
+                  className="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105"
+                  onClick={() => openModal(image)}
+                >
                   <Image
                     src={image.src}
                     alt={image.alt}
                     width={800}
                     height={600}
-                    className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                    className="h-full w-full object-cover"
                     data-ai-hint={image.hint}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -203,6 +222,16 @@ export default function HomeContent() {
           </p>
         </div>
       </footer>
+
+      {/* Renderiza o Modal de Imagem */}
+      {selectedImage && (
+        <ImageModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          imageSrc={selectedImage.src}
+          imageAlt={selectedImage.alt}
+        />
+      )}
     </div>
   );
 }

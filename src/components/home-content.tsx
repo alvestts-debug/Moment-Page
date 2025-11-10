@@ -50,7 +50,7 @@ const features = [
   },
 ];
 
-const { logo, heroImages, galleryImages } = assets;
+const { logo, heroImages, galleryImages, virtualTourVideo } = assets;
 
 export default function HomeContent() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -61,7 +61,7 @@ export default function HomeContent() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 5000);
+    }, 5000); // Change image every 5 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -144,7 +144,7 @@ export default function HomeContent() {
           </div>
         </section>
         
-        {/* Video Section - COM MELHORIAS */}
+        {/* Video Section - REVERTIDO PARA VIMEO */}
         <section id="video" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
@@ -153,20 +153,13 @@ export default function HomeContent() {
                 Faça um tour pelo apartamento decorado e sinta a experiência de morar no Moment Noroeste.
               </p>
             </div>
-            <div className="mt-12 mx-auto max-w-2xl aspect-[9/16] overflow-hidden rounded-lg shadow-2xl bg-black flex items-center justify-center">
-              <video
+            <div className="mt-12 mx-auto max-w-sm aspect-[9/16] overflow-hidden rounded-lg shadow-2xl">
+              <iframe
+                src={virtualTourVideo.url}
                 className="w-full h-full"
-                controls
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="https://i.imgur.com/sfMVYuP.jpeg"
-                preload="auto"
-              >
-                <source src="/videos/tour-virtual.mp4" type="video/mp4" />
-                Seu navegador não suporta a tag de vídeo.
-              </video>
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
         </section>
